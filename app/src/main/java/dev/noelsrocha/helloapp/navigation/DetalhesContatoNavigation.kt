@@ -1,0 +1,49 @@
+package dev.noelsrocha.helloapp.navigation
+
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
+import dev.noelsrocha.helloapp.DetalhesContato
+import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.extensions.mostraMensagem
+import dev.noelsrocha.helloapp.ui.details.DetalhesContatoTela
+import dev.noelsrocha.helloapp.ui.details.DetalhesContatoViewlModel
+import dev.noelsrocha.helloapp.ui.navegaParaFormularioContato
+import dev.noelsrocha.helloapp.util.ID_CONTATO
+import kotlinx.coroutines.launch
+
+fun NavGraphBuilder.detalhesContatoGraph(
+    navController: NavHostController
+) {
+    composable(
+        route = DetalhesContato.rotaComArgumentos,
+        arguments = DetalhesContato.argumentos
+    ) { navBackStackEntry ->
+        navBackStackEntry.arguments?.getLong(
+            ID_CONTATO
+        )?.let { idContato ->
+
+            val viewModel = hiltViewModel<DetalhesContatoViewlModel>()
+            val state by viewModel.uiState.collectAsState()
+
+            val scope = rememberCoroutineScope()
+            val context = LocalContext.current
+
+            DetalhesContatoTela(
+                state = state,
+                onClickVoltar = { navController.popBackStack() },
+                onApagaContato = {
+                    scope.launch {
+                        context.mostraMensagem(context.getString(R.string.contato_apagado))
+                    }
+                    navController.popBackStack()
+                },
+                onClickEditar = { navController.navegaParaFormularioContato(idContato) })
+        }
+    }
+}
