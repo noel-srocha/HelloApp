@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,12 +18,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.helloapp.R
-import dev.noelsrocha.helloapp.data.Contato
+import dev.noelsrocha.helloapp.R
+import dev.noelsrocha.helloapp.models.Contato
 import dev.noelsrocha.helloapp.sampleData.contatosExemplo
 import dev.noelsrocha.helloapp.ui.components.AsyncImagePerfil
+import dev.noelsrocha.helloapp.ui.components.LogoutDialog
 import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 
 @Composable
@@ -31,9 +35,18 @@ fun ListaContatosTela(
     onClickDesloga: () -> Unit = {},
     onClickAbreDetalhes: (Long) -> Unit = {},
     onClickAbreCadastro: () -> Unit = {},
+    onUsuarioPesquisar: (String) -> Unit = {},
 ) {
     Scaffold(
-        topBar = { AppBarListaContatos(onClickDesloga = onClickDesloga) },
+        topBar = {
+            AppBarListaContatos(
+                state = state,
+                onUsuarioPesquisar = onUsuarioPesquisar,
+                onClickDesloga = {
+                    state.onAbrirLogoutDialogMudou(true)
+                },
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 backgroundColor = MaterialTheme.colors.primary,
@@ -53,13 +66,67 @@ fun ListaContatosTela(
                 }
             }
         }
+
+        if (state.abrirLogoutDialog) {
+            LogoutDialog(
+                onDispensar = { state.onAbrirLogoutDialogMudou(false) },
+                onDeslogar = {
+                    state.onAbrirLogoutDialogMudou(false)
+                    onClickDesloga()
+                },
+                nomeUsuario = state.nomeUsuario
+            )
+        }
+
+        if (state.contatos.isEmpty()) {
+            Box(modifier = Modifier.padding(top = 32.dp)) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    textAlign = TextAlign.Center,
+                    text = "Nenhum contato encontrado"
+                )
+            }
+        }
     }
 }
 
 @Composable
-fun AppBarListaContatos(onClickDesloga: () -> Unit) {
+fun AppBarListaContatos(
+    state: ListaContatosUiState,
+    onUsuarioPesquisar: (String) -> Unit,
+    onClickDesloga: () -> Unit
+) {
     TopAppBar(
-        title = { Text(text = stringResource(id = R.string.nome_do_app)) },
+        title = {
+            Row(
+                Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    label = { Text(stringResource(R.string.buscar_contato)) },
+                    onValueChange = onUsuarioPesquisar,
+                    value = state.pesquisaContato,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null
+                        )
+                    },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = Color.Gray,
+                        placeholderColor = Color.LightGray,
+                        backgroundColor = Color.White
+                    ),
+                    placeholder = { Text(stringResource(R.string.buscar_contato)) },
+                    shape =  RoundedCornerShape(100)
+                )
+            }
+        },
         actions = {
             IconButton(
                 onClick = onClickDesloga
@@ -116,7 +183,7 @@ fun ContatoItem(
 fun ListaContatosPreview() {
     HelloAppTheme {
         ListaContatosTela(
-            state = ListaContatosUiState(contatosExemplo)
+            state = ListaContatosUiState(contatos = contatosExemplo)
         )
     }
 }

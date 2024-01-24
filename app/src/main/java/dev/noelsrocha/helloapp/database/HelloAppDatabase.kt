@@ -1,20 +1,14 @@
 package dev.noelsrocha.helloapp.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import dev.noelsrocha.helloapp.data.Contato
+import androidx.room.TypeConverters
+import dev.noelsrocha.helloapp.database.converters.Converters
+import dev.noelsrocha.helloapp.database.daos.ContatoDao
+import dev.noelsrocha.helloapp.models.Contato
 
 @Database(entities = [Contato::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class HelloAppDatabase : RoomDatabase() {
     abstract fun contatoDao(): ContatoDao
-
-    fun getDatabase(context: Context): HelloAppDatabase {
-        return Room.databaseBuilder(
-            context,
-            HelloAppDatabase::class.java,
-            "helloApp.db"
-        ).build()
-    }
 }

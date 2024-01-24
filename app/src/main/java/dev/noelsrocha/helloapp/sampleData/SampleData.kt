@@ -1,6 +1,6 @@
 package dev.noelsrocha.helloapp.sampleData
 
-import dev.noelsrocha.helloapp.data.Contato
+import dev.noelsrocha.helloapp.models.Contato
 import java.util.*
 
 var contatosExemplo: List<Contato> = listOf(

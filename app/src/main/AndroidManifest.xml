@@ -5,7 +5,7 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<application
-		android:name="dev.noelsrocha.helloapp.HelloAppApplication"
+		android:name=".HelloAppApplication"
 		android:allowBackup="true"
 		android:dataExtractionRules="@xml/data_extraction_rules"
 		android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +17,7 @@
 		tools:targetApi="31">
 
 		<activity
-			android:name="dev.noelsrocha.helloapp.ui.home.ListaContatosActivity"
+			android:name=".ui.home.ListaContatosActivity"
 			android:exported="true"
 			android:theme="@style/Theme.HelloApp"
 			android:windowSoftInputMode="adjustResize">

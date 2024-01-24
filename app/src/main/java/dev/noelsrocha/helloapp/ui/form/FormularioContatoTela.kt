@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.ui.components.CaixaDialogoImagem
 import dev.noelsrocha.helloapp.ui.components.caixaDialogoData
 import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme

@@ -3,6 +3,7 @@ package dev.noelsrocha.helloapp.navigation
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -14,6 +15,7 @@ import dev.noelsrocha.helloapp.ui.login.FormularioLoginViewModel
 import dev.noelsrocha.helloapp.ui.login.LoginTela
 import dev.noelsrocha.helloapp.ui.login.LoginViewModel
 import dev.noelsrocha.helloapp.ui.navegaLimpo
+import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.loginGraph(
     navController: NavHostController
@@ -22,6 +24,7 @@ fun NavGraphBuilder.loginGraph(
         startDestination = DestinosHelloApp.Login.rota,
         route = DestinosHelloApp.LoginGraph.rota
     ) {
+
         composable(
             route = DestinosHelloApp.Login.rota,
         ) {
@@ -34,10 +37,14 @@ fun NavGraphBuilder.loginGraph(
                 }
             }
 
+            val coroutineScope = rememberCoroutineScope()
+
             LoginTela(
                 state = state,
                 onClickLogar = {
-                    viewModel.tentaLogar()
+                    coroutineScope.launch {
+                        viewModel.tentaLogar()
+                    }
                 },
                 onClickCriarLogin = {
                     navController.navigate(DestinosHelloApp.FormularioLogin.rota)
@@ -50,10 +57,15 @@ fun NavGraphBuilder.loginGraph(
         ) {
             val viewModel = hiltViewModel<FormularioLoginViewModel>()
             val state by viewModel.uiState.collectAsState()
+            val coroutineScope = rememberCoroutineScope()
 
             FormularioLoginTela(
                 state = state,
                 onSalvar = {
+                    coroutineScope.launch {
+                        viewModel.salvarLogin()
+                    }
+
                     navController.navegaLimpo(DestinosHelloApp.Login.rota)
                 }
             )

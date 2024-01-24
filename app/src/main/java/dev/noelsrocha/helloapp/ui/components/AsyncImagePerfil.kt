@@ -6,7 +6,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
