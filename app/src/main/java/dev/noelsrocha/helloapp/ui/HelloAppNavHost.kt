@@ -11,6 +11,8 @@ import dev.noelsrocha.helloapp.FormularioContato
 import dev.noelsrocha.helloapp.navigation.detalhesContatoGraph
 import dev.noelsrocha.helloapp.navigation.formularioContatoGraph
 import dev.noelsrocha.helloapp.navigation.homeGraph
+import dev.noelsrocha.helloapp.navigation.loginGraph
+import dev.noelsrocha.helloapp.navigation.splashGraph
 
 @Composable
 fun HelloAppNavHost(
@@ -19,9 +21,11 @@ fun HelloAppNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = DestinosHelloApp.HomeGraph.rota,
+        startDestination = DestinosHelloApp.SplashScreen.rota,
         modifier = modifier
     ) {
+        splashGraph(navController)
+        loginGraph(navController)
         homeGraph(navController)
         formularioContatoGraph(navController)
         detalhesContatoGraph(navController)

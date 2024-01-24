@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.extensions.converteParaString
 import dev.noelsrocha.helloapp.ui.components.AsyncImagePerfil
 import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme

@@ -1,7 +1,7 @@
 package dev.noelsrocha.helloapp.ui.form
 
 import androidx.annotation.StringRes
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import java.util.*
 
 data class FormularioContatoUiState(

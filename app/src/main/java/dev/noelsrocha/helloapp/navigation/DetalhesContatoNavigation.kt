@@ -9,7 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.noelsrocha.helloapp.DetalhesContato
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.extensions.mostraMensagem
 import dev.noelsrocha.helloapp.ui.details.DetalhesContatoTela
 import dev.noelsrocha.helloapp.ui.details.DetalhesContatoViewlModel
@@ -39,7 +39,7 @@ fun NavGraphBuilder.detalhesContatoGraph(
                 onClickVoltar = { navController.popBackStack() },
                 onApagaContato = {
                     scope.launch {
-                        context.mostraMensagem(context.getString(R.string.contato_apagado))
+                        viewModel.removeContato()
                     }
                     navController.popBackStack()
                 },

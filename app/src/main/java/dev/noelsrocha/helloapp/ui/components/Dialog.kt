@@ -6,6 +6,7 @@ import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -18,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.extensions.converteParaString
 import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 import dev.noelsrocha.helloapp.util.FORMATO_DATA_DIA_MES_ANO
@@ -104,6 +105,29 @@ fun CaixaDialogoImagem(
                 }
             }
         }
+    )
+}
+
+@Composable
+fun LogoutDialog(
+    onDispensar: () -> Unit,
+    onDeslogar: () -> Unit,
+    nomeUsuario: String
+) {
+    AlertDialog(
+        confirmButton = {
+            TextButton(onClick = onDeslogar) {
+                Text("Confirmar")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDispensar) {
+                Text("Cancelar")
+            }
+        },
+        onDismissRequest = onDispensar,
+        title = { Text("Confirmar Saída") },
+        text = { Text("Você fez login como $nomeUsuario. Deseja sair desta conta?") }
     )
 }
 

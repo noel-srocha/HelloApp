@@ -23,7 +23,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.alura.helloapp.R
+import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 
 @Composable
