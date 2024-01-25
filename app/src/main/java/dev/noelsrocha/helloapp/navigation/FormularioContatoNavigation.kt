@@ -29,7 +29,7 @@ fun NavGraphBuilder.formularioContatoGraph(
     ) { navBackStackEntry ->
         navBackStackEntry.arguments?.getLong(
             ID_CONTATO
-        )?.let { idContato ->
+        )?.let {
 
             val viewModel = hiltViewModel<FormularioContatoViewModel>()
             val state by viewModel.uiState.collectAsState()

@@ -3,16 +3,12 @@ package dev.noelsrocha.helloapp.navigation
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
-import androidx.datastore.preferences.core.edit
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.noelsrocha.helloapp.DestinosHelloApp
-import dev.noelsrocha.helloapp.preferences.PreferencesKey.LOGADO
-import dev.noelsrocha.helloapp.preferences.dataStore
 import dev.noelsrocha.helloapp.ui.home.ListaContatosTela
 import dev.noelsrocha.helloapp.ui.home.ListaContatosViewModel
 import dev.noelsrocha.helloapp.ui.navegaParaDetalhes
@@ -31,7 +27,6 @@ fun NavGraphBuilder.homeGraph(
             val viewModel = hiltViewModel<ListaContatosViewModel>()
             val state by viewModel.uiState.collectAsState()
 
-            val dataStore = LocalContext.current.dataStore
             val coroutineScope = rememberCoroutineScope()
 
             ListaContatosTela(
