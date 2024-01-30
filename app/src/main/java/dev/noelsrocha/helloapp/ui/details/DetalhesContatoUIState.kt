@@ -2,7 +2,7 @@ package dev.noelsrocha.helloapp.ui.details
 
 import java.util.*
 
-data class DetalhesContatoUiState(
+data class DetalhesContatoUIState(
     val id: Long = 0L,
     val nome: String = "",
     val sobrenome: String = "",

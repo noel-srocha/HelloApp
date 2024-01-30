@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import dev.noelsrocha.helloapp.R
 import java.util.*
 
-data class FormularioContatoUiState(
+data class FormularioContatoUIState(
     val id: Long = 0L,
     val nome: String = "",
     val sobrenome: String = "",

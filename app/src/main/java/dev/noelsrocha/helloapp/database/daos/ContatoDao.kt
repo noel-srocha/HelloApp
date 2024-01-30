@@ -22,6 +22,9 @@ interface ContatoDao {
     @Query("SELECT * FROM Contato WHERE nome LIKE :nome")
     fun buscaPorNome(nome: String): Flow<List<Contato>>
 
+    @Query("SELECT * FROM Contato WHERE usuarioID = :usuarioID")
+    fun buscaTodosPorUsuario(usuarioID: Int): Flow<List<Contato>>
+
     @Query("DELETE FROM Contato WHERE id = :id")
     suspend fun deleta(id: Long)
 }

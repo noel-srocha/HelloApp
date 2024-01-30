@@ -7,21 +7,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.noelsrocha.helloapp.FormularioContato
 import dev.noelsrocha.helloapp.R
-import dev.noelsrocha.helloapp.database.HelloAppDatabase
-import dev.noelsrocha.helloapp.models.Contato
 import dev.noelsrocha.helloapp.ui.form.FormularioContatoTela
 import dev.noelsrocha.helloapp.ui.form.FormularioContatoViewModel
 import dev.noelsrocha.helloapp.util.ID_CONTATO
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.formularioContatoGraph(
-    navController: NavHostController
+    onVoltar: () -> Unit,
 ) {
     composable(
         route = FormularioContato.rotaComArgumentos,
@@ -49,10 +44,10 @@ fun NavGraphBuilder.formularioContatoGraph(
                     coroutineScope.launch{
                         viewModel.salvar()
                     }
-                    navController.popBackStack()
+                    onVoltar()
                 },
                 onCarregarImagem = {
-                    viewModel.carregaImagem(it)
+                    viewModel.carregarImagem(it)
                 }
             )
         }

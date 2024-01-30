@@ -9,8 +9,6 @@ import dev.noelsrocha.helloapp.preferences.PreferencesKey.LOGADO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +17,8 @@ class SplashScreenViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(SplashScreenUiState())
-    val uiState: StateFlow<SplashScreenUiState>
+    private val _uiState = MutableStateFlow(SplashScreenUIState())
+    val uiState: StateFlow<SplashScreenUIState>
         get() = _uiState.asStateFlow()
 
     init {

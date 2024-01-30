@@ -28,7 +28,7 @@ import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 
 @Composable
 fun FormularioLoginTela(
-    state: FormularioLoginUiState,
+    state: FormularioLoginUIState,
     modifier: Modifier = Modifier,
     onSalvar: () -> Unit = {}
 ) {
@@ -132,6 +132,6 @@ fun FormularioLoginTela(
 @Composable
 fun CadastroLoginScreenPreview() {
     HelloAppTheme {
-        FormularioLoginTela(FormularioLoginUiState())
+        FormularioLoginTela(FormularioLoginUIState())
     }
 }

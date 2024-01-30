@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.noelsrocha.helloapp.R
 import dev.noelsrocha.helloapp.database.daos.ContatoDao
 import dev.noelsrocha.helloapp.util.ID_CONTATO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +21,8 @@ class DetalhesContatoViewlModel @Inject constructor(
 
     private val idContato = savedStateHandle.get<Long>(ID_CONTATO)
 
-    private val _uiState = MutableStateFlow(DetalhesContatoUiState())
-    val uiState: StateFlow<DetalhesContatoUiState>
+    private val _uiState = MutableStateFlow(DetalhesContatoUIState())
+    val uiState: StateFlow<DetalhesContatoUIState>
         get() = _uiState.asStateFlow()
 
     init {

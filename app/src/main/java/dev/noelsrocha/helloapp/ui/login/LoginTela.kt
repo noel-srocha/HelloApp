@@ -28,7 +28,7 @@ import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 
 @Composable
 fun LoginTela(
-    state: LoginUiState,
+    state: LoginUIState,
     modifier: Modifier = Modifier,
     onClickLogar: () -> Unit = {},
     onClickCriarLogin: () -> Unit = {},
@@ -126,6 +126,6 @@ fun LoginTela(
 @Composable
 fun LoginPreview() {
     HelloAppTheme {
-        LoginTela(state = LoginUiState())
+        LoginTela(state = LoginUIState())
     }
 }
