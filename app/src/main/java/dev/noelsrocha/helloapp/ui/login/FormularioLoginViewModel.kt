@@ -1,11 +1,9 @@
 package dev.noelsrocha.helloapp.ui.login
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.noelsrocha.helloapp.preferences.PreferencesKey
+import dev.noelsrocha.helloapp.database.daos.UsuarioDao
+import dev.noelsrocha.helloapp.models.Usuario
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,11 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FormularioLoginViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val usuarioDao: UsuarioDao
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(FormularioLoginUiState())
-    val uiState: StateFlow<FormularioLoginUiState>
+    private val _uiState = MutableStateFlow(FormularioLoginUIState())
+    val uiState: StateFlow<FormularioLoginUIState>
         get() = _uiState.asStateFlow()
 
     init {
@@ -44,9 +42,10 @@ class FormularioLoginViewModel @Inject constructor(
     }
 
     suspend fun salvarLogin() {
-        dataStore.edit { preferences ->
-            preferences[PreferencesKey.USUARIO] = _uiState.value.usuario
-            preferences[PreferencesKey.SENHA] = _uiState.value.senha
-        }
+        usuarioDao.inserir(
+            with(_uiState.value) {
+                Usuario(nomeUsuario = nome, senha = senha)
+            }
+        )
     }
 }

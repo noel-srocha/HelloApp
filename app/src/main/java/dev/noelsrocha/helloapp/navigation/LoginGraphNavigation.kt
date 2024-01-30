@@ -14,11 +14,13 @@ import dev.noelsrocha.helloapp.ui.login.FormularioLoginTela
 import dev.noelsrocha.helloapp.ui.login.FormularioLoginViewModel
 import dev.noelsrocha.helloapp.ui.login.LoginTela
 import dev.noelsrocha.helloapp.ui.login.LoginViewModel
-import dev.noelsrocha.helloapp.ui.navegaLimpo
+import dev.noelsrocha.helloapp.ui.navegarLimpo
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.loginGraph(
-    navController: NavHostController
+    onNavegarParaHome: () -> Unit,
+    onNavegarParaFormularioLogin: () -> Unit,
+    onNavegarParaLogin: () -> Unit,
 ) {
     navigation(
         startDestination = DestinosHelloApp.Login.rota,
@@ -32,9 +34,7 @@ fun NavGraphBuilder.loginGraph(
             val state by viewModel.uiState.collectAsState()
 
             if (state.logado) {
-                LaunchedEffect(Unit) {
-                    navController.navegaLimpo(DestinosHelloApp.HomeGraph.rota)
-                }
+                LaunchedEffect(Unit) { onNavegarParaHome() }
             }
 
             val coroutineScope = rememberCoroutineScope()
@@ -46,9 +46,7 @@ fun NavGraphBuilder.loginGraph(
                         viewModel.tentaLogar()
                     }
                 },
-                onClickCriarLogin = {
-                    navController.navigate(DestinosHelloApp.FormularioLogin.rota)
-                }
+                onClickCriarLogin = onNavegarParaFormularioLogin
             )
         }
 
@@ -66,7 +64,7 @@ fun NavGraphBuilder.loginGraph(
                         viewModel.salvarLogin()
                     }
 
-                    navController.navegaLimpo(DestinosHelloApp.Login.rota)
+                    onNavegarParaLogin()
                 }
             )
         }

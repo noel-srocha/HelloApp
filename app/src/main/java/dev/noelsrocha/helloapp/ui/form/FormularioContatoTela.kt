@@ -34,7 +34,7 @@ import coil.request.ImageRequest
 
 @Composable
 fun FormularioContatoTela(
-    state: FormularioContatoUiState,
+    state: FormularioContatoUIState,
     modifier: Modifier = Modifier,
     onClickSalvar: () -> Unit = {},
     onCarregarImagem: (String) -> Unit = {}
@@ -193,7 +193,7 @@ fun FormularioContatoAppBar(tituloApprBar: String) {
 fun FormularioContatoTelaPreview() {
     HelloAppTheme {
         FormularioContatoTela(
-            state = FormularioContatoUiState()
+            state = FormularioContatoUIState()
         )
     }
 }

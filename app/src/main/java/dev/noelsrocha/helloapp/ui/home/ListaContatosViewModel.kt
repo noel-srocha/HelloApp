@@ -8,12 +8,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.noelsrocha.helloapp.database.daos.ContatoDao
 import dev.noelsrocha.helloapp.preferences.PreferencesKey
-import dev.noelsrocha.helloapp.preferences.PreferencesKey.USUARIO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,58 +21,30 @@ class ListaContatosViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ListaContatosUiState())
-    val uiState: StateFlow<ListaContatosUiState>
+    private val _uiState = MutableStateFlow(ListaContatosUIState())
+    val uiState: StateFlow<ListaContatosUIState>
         get() = _uiState.asStateFlow()
 
     init {
+        buscarContatos()
+    }
+
+    private fun buscarContatos() {
         viewModelScope.launch {
-            val contatos = contatoDao.buscaTodos()
-            contatos.collect { contatosBuscados ->
+            dataStore.data.first()[PreferencesKey.USUARIO_ATUAL_ID]?.let {
                 _uiState.value = _uiState.value.copy(
-                    contatos = contatosBuscados
+                    usuarioID = it
                 )
             }
         }
 
         viewModelScope.launch {
-            carregaNomeUsuario()
-        }
-
-        _uiState.update { state ->
-            state.copy(
-                onAbrirLogoutDialogMudou = {
-                    _uiState.value = _uiState.value.copy(
-                        abrirLogoutDialog = it
-                    )
-                }
-            )
-        }
-    }
-
-    private suspend fun carregaNomeUsuario() {
-        val usuario = dataStore.data.first()[USUARIO]
-        usuario?.let {
-            _uiState.value = _uiState.value.copy(
-                nomeUsuario = it
-            )
-        }
-    }
-
-    fun pesquisaContato(pesquisaContato: String) {
-        _uiState.update { it.copy(pesquisaContato = pesquisaContato) }
-
-        viewModelScope.launch {
-            val contatos = contatoDao.buscaPorNome(pesquisaContato)
-            contatos.collect { contatosBuscados ->
+            val contatos = _uiState.value.usuarioID?.let { contatoDao.buscaTodosPorUsuario(it) }
+            contatos?.collect { contatosBuscados ->
                 _uiState.value = _uiState.value.copy(
                     contatos = contatosBuscados
                 )
             }
         }
-    }
-
-    suspend fun desloga() {
-        dataStore.edit { preferences -> preferences[PreferencesKey.LOGADO] = false }
     }
 }

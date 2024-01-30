@@ -1,6 +1,6 @@
 package dev.noelsrocha.helloapp.ui.splashscreen
 
-data class SplashScreenUiState(
+data class SplashScreenUIState(
     val appState: AppState = AppState.Carregando
 )
 

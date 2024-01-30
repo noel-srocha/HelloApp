@@ -3,7 +3,7 @@ package dev.noelsrocha.helloapp.sampleData
 import dev.noelsrocha.helloapp.models.Contato
 import java.util.*
 
-var contatosExemplo: List<Contato> = listOf(
+val contatosExemplo: List<Contato> = listOf(
     Contato(
         nome = "Ana",
         sobrenome = "Clara",

@@ -1,12 +1,11 @@
 package dev.noelsrocha.helloapp.ui.login
 
-data class LoginUiState(
+data class FormularioLoginUIState(
+    val nome: String = "",
     val usuario: String = "",
     val senha: String = "",
-    val exibirErro: Boolean = false,
-    val onErro: (Boolean) -> Unit = {},
+    val onNomeMudou: (String) -> Unit = {},
     val onUsuarioMudou: (String) -> Unit = {},
     val onSenhaMudou: (String) -> Unit = {},
-    val onClickLogar: () -> Unit = {},
-    val logado: Boolean = false
+    val onClickSalvar: () -> Unit = {}
 )

@@ -19,7 +19,7 @@ import dev.noelsrocha.helloapp.ui.theme.HelloAppTheme
 
 @Composable
 fun DetalhesContatoTela(
-    state: DetalhesContatoUiState,
+    state: DetalhesContatoUIState,
     modifier: Modifier = Modifier,
     onClickVoltar: () -> Unit = {},
     onClickEditar: () -> Unit = {},
@@ -201,6 +201,6 @@ fun DetalhesContatoAppBar(
 @Composable
 fun DetalhesContatoScreenPreview() {
     HelloAppTheme {
-        DetalhesContatoTela(state = DetalhesContatoUiState())
+        DetalhesContatoTela(state = DetalhesContatoUIState())
     }
 }

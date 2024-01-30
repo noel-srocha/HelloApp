@@ -8,11 +8,15 @@ import androidx.navigation.compose.NavHost
 import dev.noelsrocha.helloapp.DestinosHelloApp
 import dev.noelsrocha.helloapp.DetalhesContato
 import dev.noelsrocha.helloapp.FormularioContato
+import dev.noelsrocha.helloapp.FormularioUsuario
+import dev.noelsrocha.helloapp.ListaUsuarios
+import dev.noelsrocha.helloapp.navigation.buscaContatosGraph
 import dev.noelsrocha.helloapp.navigation.detalhesContatoGraph
 import dev.noelsrocha.helloapp.navigation.formularioContatoGraph
 import dev.noelsrocha.helloapp.navigation.homeGraph
 import dev.noelsrocha.helloapp.navigation.loginGraph
 import dev.noelsrocha.helloapp.navigation.splashGraph
+import dev.noelsrocha.helloapp.navigation.usuariosGraph
 
 @Composable
 fun HelloAppNavHost(
@@ -24,36 +28,129 @@ fun HelloAppNavHost(
         startDestination = DestinosHelloApp.SplashScreen.rota,
         modifier = modifier
     ) {
-        splashGraph(navController)
-        loginGraph(navController)
-        homeGraph(navController)
-        formularioContatoGraph(navController)
-        detalhesContatoGraph(navController)
+        splashGraph(
+            onNavegarParaLogin = {
+                navController.navegarParaLoginElimpaBackStack()
+            },
+            onNavegarParaHome = {
+                navController.navegarParaHome()
+            },
+        )
+        loginGraph(
+            onNavegarParaHome = {
+                navController.navegarParaHome()
+            },
+            onNavegarParaFormularioLogin = {
+                navController.navegarParaFormlarioLogin()
+            },
+            onNavegarParaLogin = {
+                navController.navegarParaLoginElimpaBackStack()
+            },
+        )
+        homeGraph(
+            onNavegarParaDetalhes = { idContato ->
+                navController.navegarParaDetalhes(idContato)
+            },
+            onNavegarParaFormularioContato = {
+                navController.navegarParaFormularioContato()
+            },
+            onNavegarParaDialogUsuarios = { idUsuario ->
+                navController.navegarParaDialogUsuarios(idUsuario)
+            },
+            onNavegarParaBuscaContatos = {
+                navController.navegarParaBuscaContatos()
+            }
+        )
+        formularioContatoGraph(
+            onVoltar = {
+                navController.popBackStack()
+            },
+        )
+        detalhesContatoGraph(
+            onVoltar = {
+                navController.popBackStack()
+            },
+            onNavegarParaDialogUsuarios = { idContato ->
+                navController.navegarParaFormularioContato(idContato)
+            },
+        )
+        usuariosGraph(
+            onVoltar = {
+                navController.popBackStack()
+            },
+            onNavegarParaLogin = {
+                navController.navegarParaLogin()
+            },
+            onNavegarParaHome = {
+                navController.navegarParaHome()
+            },
+            onNavegarGerenciarUsuarios = {
+                navController.navegarParaGerenciaUsuarios()
+            },
+            onNavegarParaFormularioUsuario = { idUsuario ->
+                navController.navegarParaFormularioUsuario(idUsuario)
+            },
+        )
+        buscaContatosGraph(
+            onVolta = {
+                navController.popBackStack()
+            },
+            onClickNavegaParaDetalhesContato = { idContato ->
+                navController.navegarParaDetalhes(idContato)
+            },
+        )
     }
 }
 
 
-fun NavHostController.navegaDireto(rota: String) = this.navigate(rota) {
-    popUpTo(this@navegaDireto.graph.findStartDestination().id) {
+fun NavHostController.navegarDireto(rota: String) = this.navigate(rota) {
+    popUpTo(this@navegarDireto.graph.findStartDestination().id) {
         saveState = true
     }
     launchSingleTop = true
     restoreState = true
 }
 
-fun NavHostController.navegaLimpo(rota: String) = this.navigate(rota) {
+fun NavHostController.navegarLimpo(rota: String) = this.navigate(rota) {
     popUpTo(0)
 }
 
-fun NavHostController.navegaParaDetalhes(idContato: Long) {
-    navegaDireto("${DetalhesContato.rota}/$idContato")
+fun NavHostController.navegarParaDetalhes(idContato: Long) {
+    navegarDireto("${DetalhesContato.rota}/$idContato")
 }
 
-fun NavHostController.navegaParaFormularioContato(idContato: Long = 0L) {
+fun NavHostController.navegarParaFormularioContato(idContato: Long = 0L) {
     navigate("${FormularioContato.rota}/$idContato")
 }
 
-fun NavHostController.navegaParaLoginDeslogado() {
-    popBackStack(DestinosHelloApp.ListaContatos.rota, true)
-    navegaDireto(DestinosHelloApp.LoginGraph.rota)
+fun NavHostController.navegarParaLoginElimpaBackStack() {
+    navegarLimpo(DestinosHelloApp.LoginGraph.rota)
+}
+
+fun NavHostController.navegarParaDialogUsuarios(idUsuario: Int) {
+    navigate("${ListaUsuarios.rota}/$idUsuario")
+}
+
+fun NavHostController.navegarParaFormularioUsuario(idUsuario: Int) {
+    navigate("${FormularioUsuario.rota}/$idUsuario")
+}
+
+fun NavHostController.navegarParaLogin() {
+    navigate(DestinosHelloApp.Login.rota)
+}
+
+fun NavHostController.navegarParaHome() {
+    navegarLimpo(DestinosHelloApp.HomeGraph.rota)
+}
+
+fun NavHostController.navegarParaFormlarioLogin() {
+    navigate(DestinosHelloApp.FormularioLogin.rota)
+}
+
+fun NavHostController.navegarParaGerenciaUsuarios() {
+    navigate(DestinosHelloApp.GerenciaUsuarios.rota)
+}
+
+fun NavHostController.navegarParaBuscaContatos() {
+    navigate(DestinosHelloApp.BuscaContatos.rota)
 }
